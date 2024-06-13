@@ -5,7 +5,8 @@ const prompt = require("prompt-sync")();
 const connection = mysql.createConnection({
   host: "localhost",
   user: "root",
-  database: "CRM",
+  password: "cratose@41795",
+  database: "Customers",
 });
 
 // Function to view all customers
