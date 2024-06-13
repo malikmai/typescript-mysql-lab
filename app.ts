@@ -1,5 +1,6 @@
 // Connection to the MySql server
 import * as mysql from "mysql2";
+const prompt = require('prompt-sync')();
 
 const connection = mysql.createConnection({
     host: 'localhost',
@@ -8,12 +9,17 @@ const connection = mysql.createConnection({
     database: 'Customers',
 });
 
-// connection.connect(() => {
-//     console.log(`Conencted to the MySql server`);
-// });
 
-connection.query('SELECT * FROM customers', (err, results) => {
-    console.log(results);
-});
+function startProgram():void{
+    console.log("Welcome to the CRM");
+    
+    while (true) {
+
+        
+ 
+    }  
+}
+
+startProgram();
 
 connection.end();
