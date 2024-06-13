@@ -1,34 +1,46 @@
-// Connection to the MySql server
 import * as mysql from "mysql2";
 const prompt = require('prompt-sync')();
 
+// Set up the MySQL connection
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     database: 'CRM',
 });
 
-// Console Log Prompts
-let answer:string
+// Function to view all customers
+const viewAllCustomers = () => {
+    connection.query('SELECT * FROM customers', (err, results, fields) => {
+        console.log('Query results:', results);
+        connection.end();
+    });
+};
 
-function startProgram(): void {
+// Main function to handle user input
+const main = () => {
+    console.log('Welcome to your CRM');
+    console.log('1. View all customers');
+    console.log('2. Exit');
 
-    console.log('Welcome to the CRM')
-    do {
-        answer = prompt('1. View all Customers \n2. Exit ');
+    const choice = prompt('Please enter your choice: ');
 
-        if (answer === '1') {
-            connection.query('SELECT * FROM customers', (err, results) => {
-                console.log(results);
-            });
-        }
-        
-        else if (answer === '2') {
-            console.log('exiting ...')
-            break
-        }
-    } while (answer !== "2")
+    switch (choice) {
+        case '1':
+            viewAllCustomers();
+            break;
+        case '2':
+            console.log('Exiting...');
+            connection.end();
+            break;
+        default:
+            console.log('Invalid choice. Exiting...');
+            connection.end();
+            break;
     }
+};
 
-startProgram()
-connection.end();
+// Connect to the MySQL database
+connection.connect(() => {
+    console.log('Connected to the database');
+    main();
+});
