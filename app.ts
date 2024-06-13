@@ -9,7 +9,7 @@ const connection = mysql.createConnection({
 });
 
 // Function to view all customers
-const viewAllCustomers = () => {
+const viewAllCustomers = (): void => {
   connection.query("SELECT * FROM customers", (err, results, fields) => {
     console.log("Query results:", results);
     connection.end();
@@ -17,12 +17,12 @@ const viewAllCustomers = () => {
 };
 
 // Function to Create
-const createCustomer = () => {
-    const firstName = prompt('Enter first name. ');
-    const lastName = prompt('Enter last name. ');
-    const age = prompt('Enter age. ');
-    const sql = 'INSERT INTO customers (first_name, last_name, age) VALUES (?, ?, ?)';
-    const values = [firstName, lastName, age];
+const createCustomer = (): void => {
+    const firstName: string = prompt('Enter first name. ');
+    const lastName:  string= prompt('Enter last name. ');
+    const age: string = prompt('Enter age. ');
+    const sql: string = 'INSERT INTO customers (first_name, last_name, age) VALUES (?, ?, ?)';
+    const values: string []= [firstName, lastName, age];
 
     connection.query(sql, values, (err, results, fields) => {
         if (err) {
@@ -36,12 +36,12 @@ const createCustomer = () => {
 
 // Function to Update
 const updateCustomer = (): void => {
-  const id = prompt('Enter the customer ID to edit: ');
-  const firstName = prompt('Enter new first name: ');
-  const lastName = prompt('Enter new last name: ');
-  const age = prompt('Enter new age: ');
-  const sql = 'UPDATE customers SET first_name = ?, last_name = ?, age = ? WHERE id = ?';
-  const values = [firstName, lastName, age, id];
+  const id: string= prompt('Enter the customer ID to edit: ');
+  const firstName: string= prompt('Enter new first name: ');
+  const lastName : string = prompt('Enter new last name: ');
+  const age :string = prompt('Enter new age: ');
+  const sql:string='UPDATE customers SET first_name = ?, last_name = ?, age = ? WHERE id = ?';
+  const values:string[] = [firstName, lastName, age, id];
 
   connection.query(sql, values, (err, results) => {
       if (err) {
@@ -56,8 +56,8 @@ const updateCustomer = (): void => {
 
 // Function to Delete
 const deleteCustomer = (): void => {
-  const id = prompt('Enter the ID of the customer you want to delete: ');
-  const sql = 'DELETE FROM customers WHERE id = ?';
+  const id:string=prompt('Enter the ID of the customer you want to delete: ');
+  const sql:string='DELETE FROM customers WHERE id = ?';
 
   connection.query(sql, [id], (err, results) => {
       if (err) {
@@ -79,7 +79,7 @@ const main = (): void => {
     console.log('4. Delete Customer')
     console.log('5. Exit');
 
-  const choice = prompt("Please enter your choice: ");
+  const choice : string = prompt("Please enter your choice: ");
 
     switch (choice) {
         case '1':
