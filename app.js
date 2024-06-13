@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var mysql = require("mysql2");
-var prompt = require('prompt-sync')();
+var prompt = require("prompt-sync")();
 // Set up the MySQL connection
 var connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    database: 'CRM',
+    host: "localhost",
+    user: "root",
+    database: "CRM",
 });
 // Function to view all customers
 var viewAllCustomers = function () {
-    connection.query('SELECT * FROM customers', function (err, results, fields) {
-        console.log('Query results:', results);
+    connection.query("SELECT * FROM customers", function (err, results, fields) {
+        console.log("Query results:", results);
         connection.end();
     });
 };
@@ -34,13 +34,32 @@ var createCustomer = function () {
 // Function to Update
 var updateCustomer = function () {
     var id = prompt('Enter the customer ID to edit: ');
-    var firstname = prompt('Enter new customer first name: ');
-    var lastname = prompt('Enter new customer last name: ');
-    var age = prompt('Enter new customer age: ');
+    var firstName = prompt('Enter new first name: ');
+    var lastName = prompt('Enter new last name: ');
+    var age = prompt('Enter new age: ');
+    var sql = 'UPDATE customers SET first_name = ?, last_name = ?, age = ? WHERE id = ?';
+    var values = [firstName, lastName, age, id];
+    connection.query(sql, values, function (err, results) {
+        if (err) {
+            console.error('Error updating customer:', err);
+            return;
+        }
+        console.log('Customer updated successfully:', results);
+        connection.end();
+    });
 };
 // Function to Delete
 var deleteCustomer = function () {
-    var id = prompt('Enter the ID you want to delete');
+    var id = prompt('Enter the ID of the customer you want to delete: ');
+    var sql = 'DELETE FROM customers WHERE id = ?';
+    connection.query(sql, [id], function (err, results) {
+        if (err) {
+            console.error('Error deleting customer:', err);
+            return;
+        }
+        console.log('Customer deleted successfully:', results);
+        connection.end();
+    });
 };
 // Main function to handle user input
 var main = function () {
@@ -50,7 +69,7 @@ var main = function () {
     console.log('3. Update Customer');
     console.log('4. Delete Customer');
     console.log('5. Exit');
-    var choice = prompt('Please enter your choice: ');
+    var choice = prompt("Please enter your choice: ");
     switch (choice) {
         case '1':
             viewAllCustomers();
@@ -65,7 +84,7 @@ var main = function () {
             break;
         case '4':
             deleteCustomer();
-            console.log('Sucessfully deleted');
+            console.log('Successfully deleted');
             break;
         case '5':
             console.log('Exiting...');
@@ -79,6 +98,6 @@ var main = function () {
 };
 // Connect to the MySQL database
 connection.connect(function () {
-    console.log('Connected to the database');
+    console.log("Connected to the database");
     main();
 });
