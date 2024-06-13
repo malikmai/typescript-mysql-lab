@@ -35,20 +35,43 @@ const createCustomer = () => {
 };
 
 // Function to Update
-const updateCustomer = () => {
-    const id = prompt('Enter the customer ID to edit: ');
-    const firstname = prompt('Enter new customer first name: ');
-    const lastname = prompt('Enter new customer last name: ');
-    const age = prompt('Enter new customer age: ');
-}
+const updateCustomer = (): void => {
+  const id = prompt('Enter the customer ID to edit: ');
+  const firstName = prompt('Enter new first name: ');
+  const lastName = prompt('Enter new last name: ');
+  const age = prompt('Enter new age: ');
+  const sql = 'UPDATE customers SET first_name = ?, last_name = ?, age = ? WHERE id = ?';
+  const values = [firstName, lastName, age, id];
+
+  connection.query(sql, values, (err, results) => {
+      if (err) {
+          console.error('Error updating customer:', err);
+          return;
+      }
+      console.log('Customer updated successfully:', results);
+      connection.end();
+  });
+};
+
 
 // Function to Delete
-const deleteCustomer = () => {
-    const id = prompt('Enter the ID you want to delete')
-}
+const deleteCustomer = (): void => {
+  const id = prompt('Enter the ID of the customer you want to delete: ');
+  const sql = 'DELETE FROM customers WHERE id = ?';
+
+  connection.query(sql, [id], (err, results) => {
+      if (err) {
+          console.error('Error deleting customer:', err);
+          return;
+      }
+      console.log('Customer deleted successfully:', results);
+      connection.end();
+  });
+};
+
 
 // Main function to handle user input
-const main = () => {
+const main = (): void => {
     console.log('Welcome to your CRM');
     console.log('1. View all customers');
     console.log('2. Create Customer')
@@ -72,7 +95,7 @@ const main = () => {
             break
         case '4':
             deleteCustomer();
-            console.log('Sucessfully deleted')
+            console.log('Successfully deleted')
             break
         case '5':
             console.log('Exiting...');
