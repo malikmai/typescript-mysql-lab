@@ -16,62 +16,52 @@ const viewAllCustomers = () => {
   });
 };
 
-// Function to Create new Customer
-
+// Function to Create
 const createCustomer = () => {
-  const firstName = prompt("Enter first name: ");
-  const lastName = prompt("Enter last name: ");
-  const age = prompt("Enter age: ");
-  const sql = 'INSERT INTO customers (first_name, last_name, age) VALUES (?,?,?)';
-  const values = [firstName, lastName, age];
-  connection.query(sql, values, (err, results, fields) => {
-    if (err) {
-        console.error('Error,inserting customer:', err);
-        return;
-    }
-    console.log('Customer Created Successfully', results);
-    connection.end();
-});
-}
+    const firstName = prompt('Enter first name. ');
+    const lastName = prompt('Enter last name. ');
+    const age = prompt('Enter age. ');
+    const sql = 'INSERT INTO customers (first_name, last_name, age) VALUES (?, ?, ?)';
+    const values = [firstName, lastName, age];
 
-//Function to Edit
+    connection.query(sql, values, (err, results, fields) => {
+        if (err) {
+            console.error('Error inserting customer:', err);
+            return;
+        }
+        console.log('Customer inserted successfully:', results);
+        connection.end();
+    });
+};
 
-//Function to Update
 
-//Function to Delete
+// Function to Edit
 
-//     connection.query('INSERT INTO customers (first_name, last_name, age) VALUES (?,?,?)', [firstName, lastName, age], (err, results, fields) => {
-//         console.log('Query results:', results);
-//         connection.end();
-//     });
-// };
+// Function to Update
+
+// Function to Delete
 
 // Main function to handle user input
 const main = () => {
-  console.log("Welcome to your CRM");
-  console.log("1. View all customers");
-  console.log("2. Create Customer");
-  console.log("3. Edit Customer");
-  console.log("4. Exit");
+    console.log('Welcome to your CRM');
+    console.log('1. View all customers');
+    console.log('2. Exit');
 
   const choice = prompt("Please enter your choice: ");
 
-  switch (choice) {
-    case "1":
-      viewAllCustomers();
-      break;
-    case "2":
-      console.log('Customer Created')
-      break;
-    case "3":
-        console.log('Customer Edited')
-        case "4":
-            console.log('Exiting...')
-    default:
-      console.log("Invalid choice. Exiting...");
-      connection.end();
-      break;
-  }
+    switch (choice) {
+        case '1':
+            viewAllCustomers();
+            break;
+        case '2':
+            console.log('Exiting...');
+            connection.end();
+            break;
+        default:
+            console.log('Invalid choice. Exiting...');
+            connection.end();
+            break;
+    }
 };
 
 // Connect to the MySQL database
