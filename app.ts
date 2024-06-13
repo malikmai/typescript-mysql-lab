@@ -16,11 +16,37 @@ const viewAllCustomers = () => {
     });
 };
 
+// Function to Create
+const createCustomer = () => {
+    const firstName = prompt('Enter first name. ');
+    const lastName = prompt('Enter last name. ');
+    const age = prompt('Enter age. ');
+    const sql = 'INSERT INTO customers (first_name, last_name, age) VALUES (?, ?, ?)';
+    const values = [firstName, lastName, age];
+
+    connection.query(sql, values, (err, results, fields) => {
+        if (err) {
+            console.error('Error inserting customer:', err);
+            return;
+        }
+        console.log('Customer inserted successfully:', results);
+        connection.end();
+    });
+};
+
+
+// Function to Edit
+
+// Function to Update
+
+// Function to Delete
+
 // Main function to handle user input
 const main = () => {
     console.log('Welcome to your CRM');
     console.log('1. View all customers');
-    console.log('2. Exit');
+    console.log('2. Create Customer')
+    console.log('3. Exit');
 
     const choice = prompt('Please enter your choice: ');
 
@@ -29,6 +55,10 @@ const main = () => {
             viewAllCustomers();
             break;
         case '2':
+            createCustomer();
+            console.log('Customer Created')
+            break
+        case '3':
             console.log('Exiting...');
             connection.end();
             break;
