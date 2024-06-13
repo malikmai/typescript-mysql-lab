@@ -8,22 +8,27 @@ const connection = mysql.createConnection({
     database: 'CRM',
 });
 
-connection.connect(() => {
-    console.log(`Conencted to the MySql server`);
-});
+// Console Log Prompts
+let answer:string
 
-connection.query('SELECT * FROM customers', (err, results) => {
-    console.log(results);
-});
+function startProgram(): void {
 
+    console.log('Welcome to the CRM')
+    do {
+        answer = prompt('1. View all Customers \n2. Exit ');
+
+        if (answer === '1') {
+            connection.query('SELECT * FROM customers', (err, results) => {
+                console.log(results);
+            });
+        }
+        
+        else if (answer === '2') {
+            console.log('exiting ...')
+            break
+        }
+    } while (answer !== "2")
+    }
+
+startProgram()
 connection.end();
-
-import * as readline from "readline";
-
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-});
-
-const answer = prompt ('Whats your name? ');
-console.log('Hello' , answer);
