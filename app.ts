@@ -17,7 +17,7 @@ const viewAllCustomers = async () => {
                 console.error(`Error in fetching custoemrs: ${err}`);
                 return reject(err);
             }
-            console.log("Here is the list of customers:");
+            console.log("Here is the list of customers:", results);
             resolve(results);
           });
     });
@@ -123,8 +123,4 @@ const main = async () => {
     }
 };
 
-// Connect to the MySQL database
-connection.connect(() => {
-  console.log("Connected to the database");
-  main();
-});
+main();
