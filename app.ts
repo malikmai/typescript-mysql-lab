@@ -11,6 +11,8 @@ const connection = mysql.createConnection({
 
 // Function to view all customers
 const viewAllCustomers = async () => {
+    //Promise = It is an object representing the eventual completion or failure of an async operation
+    //NOTE: We are fetching data from our Database, so these operations are asynchronous --> We can use the "new Promise" constructor to handle the fetching operation: 1.The new Promise() construcotr takes in a single function as an argument and that function is called the "executor function" - The executor function has two parameters (resolve, reject) --> Which are themselves functions and used to control the outcome of the Promise, 2.Inside the executor function we run the async operation (fetching data from database) and check for any errors using the reject() function to be called if INDEED there is an error - AND handling a successful query with the resolve() function since the err object will be null 3.We pass the "results" of the query to the resolve() function to fulfill the promise 4.When we INVOKE this async function, we MUST use the "await" keyword
     return new Promise((resolve, reject)=>{
         connection.query("SELECT * FROM customers", (err, results, fields) => {
             if(err){
@@ -18,7 +20,7 @@ const viewAllCustomers = async () => {
                 return reject(err);
             }
             console.log("Here is the list of customers:", results);
-            resolve(results);
+            resolve(results); //If query is successfull, we pass the "results" parameter holding the ACTUAL results of the query to the resolve() function to fulfill the promise
           });
     });
 };
